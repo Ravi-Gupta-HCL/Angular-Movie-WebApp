@@ -1,0 +1,5 @@
+<img *ngIf="!list" src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif">
+<div *ngIf="list?.length === 0">There are no records to display.</div>
+<ng-container *ngIf="list && list.length > 0">
+<ng-content select="[content]"></ng-content>
+<ng-container>

@@ -1,0 +1,19 @@
+<form>
+    <mat-form-field>
+        <input type="text" [formControl]="control" [matAutocomplete]="auto" placeholder="Select the actors" matInput />
+    </mat-form-field>
+    <mat-autocomplete #auto
+    (optionSelected)="optionSelected($event)"
+    >
+    <mat-option *ngFor="let actor of actors" [value]="actor">
+        <img [src]="actor.picture"/>{{actor.name}}
+    </mat-option>
+    </mat-autocomplete>   
+</form>
+
+<ul>
+    <li *ngFor="let actor of selectedActors">
+        {{actor.name}}
+    </li>
+</ul>
+
