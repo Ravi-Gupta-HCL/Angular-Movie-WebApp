@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { genreCreationDTO } from '../genres.model';
+import { firstLetterUppercase } from 'src/app/validators/firstLetterUppercase';
 
 @Component({
   selector: 'app-form-genre',
@@ -22,7 +23,7 @@ export class FormGenreComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: ['',{
-        validators: [Validators.required,Validators.minLength(3)]
+        validators: [Validators.required,Validators.minLength(3),firstLetterUppercase()]
       }]
   });
 
@@ -46,6 +47,10 @@ export class FormGenreComponent implements OnInit {
     {
       return 'The the minimum lenght is 3';
     }
+    if (field?.hasError('firstLetterUppercase')){
+      return field.getError('firstLetterUppercase').message;
+    }
+
     return '';
   }
 }
