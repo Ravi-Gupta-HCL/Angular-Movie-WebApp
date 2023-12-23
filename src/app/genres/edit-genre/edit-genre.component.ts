@@ -10,7 +10,7 @@ import { GenresService } from '../genres.service';
 })
 export class EditGenreComponent implements OnInit {
   
-  constructor(private activatedRoute:ActivatedRoute
+  constructor(private activatedRoute: ActivatedRoute
     , private genreService: GenresService
     ,private router: Router ){
   }
@@ -18,16 +18,18 @@ export class EditGenreComponent implements OnInit {
   model!: genreDTO;
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params =>{
+    this.activatedRoute.params.subscribe(params => {
       this.genreService.getById(params['id']).subscribe(genre => {
-        this.model=genre;
-      })
+        this.model = genre;
+      });
     });
   }
 
   saveChanges(genreCreationDTO: genreCreationDTO){
-    this.genreService.edit(this.model.id,genreCreationDTO).subscribe(() => {
-      this.router.navigate(['/genres']);
-    });
+  this.genreService.edit(this.model.id ,genreCreationDTO)
+  .subscribe(() => {
+      this.router.navigate(["/genres"]);
+    }, err => console.error(err)
+     );
   }
 }

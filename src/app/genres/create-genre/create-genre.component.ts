@@ -21,7 +21,9 @@ export class CreateGenreComponent implements OnInit {
   }
   saveChanges(genreCreationDTO: genreCreationDTO){
     this.genreService.create(genreCreationDTO).subscribe(() => {
+
       this.router.navigate(['/genres']);
+      
     },error => this.errors = parseWebAPIErrors(error));
   }
 }
