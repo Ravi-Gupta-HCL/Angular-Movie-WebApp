@@ -1,3 +1,39 @@
 <h2>Movie Theatears</h2>
 
 <button mat-flat-button color="primary" routerLink="/movietheaters/create">Create New</button>
+
+<app-generics-list [list]="movieTheaters">
+    <ng-container content>
+        <table mat-table [dataSource]="movieTheaters" class="mat-elevation-z8 table-index">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <a routerLink="/movietheaters/edit/{{element.id}}"
+                    mat-flat-button color="primary"
+                    >
+                    Edit
+                    </a>
+                    <button mat-flat-button color="warn" 
+                    (click)="delete(element.id)">
+                    Delete</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[2,5,10,20,50]"
+           showFirstLastButtons="true"
+           [pageSize]="pageSize"
+           [length]="totalAmountOfRecords"
+            (page)="updatePagination($event)"         
+            class="mat-elevation-z8"  
+           >
+           </mat-paginator> -->
+    </ng-container>
+</app-generics-list>

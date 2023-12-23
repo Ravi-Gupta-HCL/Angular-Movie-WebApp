@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { actorCreationDTO, actorDTO } from '../actors.model';
+import { ActorsService } from '../actors.service';
+import { formatDateFormData } from 'src/app/utilities/utils';
+
 
 @Component({
   selector: 'app-edit-actor',
@@ -9,24 +12,21 @@ import { actorCreationDTO, actorDTO } from '../actors.model';
 })
 export class EditActorComponent implements OnInit {
   
-  constructor(private ActivatedRoute: ActivatedRoute){
-  }
-  
-  model: actorDTO = 
-      {
-        name: 'Ravi Kumar Gupta', 
-        dateOfBirth: new Date(), 
-        biography: 'Default biography',
-        picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Tom_Holland_by_Gage_Skidmore.jpg/330px-Tom_Holland_by_Gage_Skidmore.jpg'
-      }
+  constructor(private ActivatedRoute: ActivatedRoute, private actorService: ActorsService
+    ,private router: Router) {
+    }
+    
+  model!: actorDTO;
 
   ngOnInit(): void {
     this.ActivatedRoute.params.subscribe(params =>{
-    //alert(params['id']);
+    this.actorService.getById(params['id']).subscribe(actor => this.model= actor)
     });    
   }
 
-  saveChanges(actorCreationDTO: actorCreationDTO){
-     console.log(actorCreationDTO);
+  saveChanges(actor: actorCreationDTO){
+     this.actorService.edit(this.model.id, actor).subscribe(() => {
+      this.router.navigate(['/actors']);
+     });
   }
 }

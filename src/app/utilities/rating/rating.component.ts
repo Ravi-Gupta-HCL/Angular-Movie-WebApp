@@ -1,5 +1,8 @@
 import { outputAst } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SecurityService } from 'src/app/security/security.service';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-rating',
@@ -7,7 +10,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./rating.component.css']
 })
 export class RatingComponent implements OnInit {
-  constructor() { }
+  constructor(private securityService: SecurityService) { }
   @Input()
   maxRating = 5;
 
@@ -38,9 +41,13 @@ export class RatingComponent implements OnInit {
   }
 
   rate(index: number){
-    this.selectedRate = index+1;
+    if(this.securityService.isAuthenticated()){
+      this.selectedRate = index+1;
     this.previousRate = this.selectedRate;
     this.onRating.emit(this.selectedRate);
+    }else{
+      Swal.fire("error","You need to longin first to rate this movie","error");
+    }
   }
 
 }

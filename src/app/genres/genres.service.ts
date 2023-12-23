@@ -29,4 +29,8 @@ export class GenresService {
     return this.http.put(`${this.apiURL}/${id}`, genre)
   }
 
+  delete(id: number){
+    return this.http.delete(`${this.apiURL}/${id}`)
+  }
+
 }
